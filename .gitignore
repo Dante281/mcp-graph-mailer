@@ -1,0 +1,35 @@
+# Python generated
+__pycache__/
+*.py[cod]
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Virtual environments
+.venv/
+__pypackages__/
+
+# uv
+.uv/
+
+# Secrets & auth
+.env
+token_cache.bin
+*.token
+*.cache
+
+# MCP / logs
+*.log
+logs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
