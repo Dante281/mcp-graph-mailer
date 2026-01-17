@@ -35,5 +35,5 @@ htmlcov/
 Thumbs.db
 
 # Private development notes
-.dev-notes.md
+roadmap.md
 agents.md
