@@ -10,6 +10,9 @@ async def main() -> None:
         greet_res = await client.call_tool("greet", {"name": "Ford"})
         print("greet:", greet_res.data)
 
+        add_res = await client.call_tool("add", {"a": 5, "b": 3})
+        print("add:", add_res.data)
+
         preview_res = await client.call_tool(
             "preview_email",
             {
@@ -19,7 +22,7 @@ async def main() -> None:
             },
         )
 
-        # preview_res.data suele ser el dict “limpio”
+        # preview_res.data suele ser el dict "limpio"
         print("preview_email (data):")
         print(json.dumps(preview_res.data, indent=2, ensure_ascii=False))
 
