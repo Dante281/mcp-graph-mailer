@@ -1,5 +1,6 @@
 import pytest
 import time
+from unittest.mock import patch
 from tools import email_flow, drafts
 
 
@@ -48,8 +49,12 @@ def test_confirm_flow(flow_tools):
     res = prepare(to=["final@example.com"], subject="Sent", body="Hi")
     did = res["draft_id"]
 
-    # 2. Confirm
-    confirm_res = confirm(did)
+    # 2. Confirm (with strict mocks)
+    with patch("tools.auth.get_token", return_value={"access_token": "mock-token"}):
+        with patch("tools.graph_client.send_mail") as mock_send:
+            confirm_res = confirm(did)
+            mock_send.assert_called_once()
+
     assert "sent successfully" in confirm_res
 
     # 3. Verify deleted
@@ -71,7 +76,11 @@ def test_expiration_logic(flow_tools):
     # Wait for expire
     time.sleep(1.1)
 
-    # Try confirm
+    # Try confirm (mock auth just in case, though it should fail before)
+    # Actually, if it fails before auth check, no mock needed.
+    # But if we change order, it might trigger.
+    # Current code: get_draft -> Check None -> Return Error.
+    # So auth is NOT called.
     confirm = flow_tools["confirm_send"]
     out = confirm(did)
     assert "not found or expired" in out

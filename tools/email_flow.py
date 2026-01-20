@@ -18,6 +18,7 @@ from tools import drafts
 # Let's import the private helpers for now (Python allows it).
 from tools.mail_preview import _normalize_emails, _is_valid_email, _domain_allowed
 from tools.mail_preview import MAX_RECIPIENTS, MAX_BODY_CHARS
+from tools import auth, graph_client
 
 
 def register(mcp: FastMCP) -> None:
@@ -83,12 +84,22 @@ def register(mcp: FastMCP) -> None:
         if not data:
             return f"Error: Draft '{draft_id}' not found or expired."
 
-        # 3. Simulate Send (for now)
-        # In Hito 6 we will connect Graph API here.
-        recipients = ", ".join(data["to"])
-        print(f"[SIMULATED SEND] To: {recipients} | Subject: {data['subject']}")
+        # 3. Get Token
+        token_data = auth.get_token()
+        if not token_data or "access_token" not in token_data:
+            return "Error: Authentication required. Run auth_bootstrap.py or check auth status."
 
-        # 4. Burn the draft
+        token = token_data["access_token"]
+
+        # 4. Send via Graph
+        try:
+            graph_client.send_mail(token, data)
+        except Exception as e:
+            return f"Error sending email: {str(e)}"
+
+        recipients = ", ".join(data["to"])
+
+        # 5. Burn the draft (only on success)
         drafts.store.delete_draft(draft_id)
 
         return f"Email sent successfully to {recipients}"
