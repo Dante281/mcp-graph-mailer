@@ -94,6 +94,14 @@ def register(mcp: FastMCP) -> None:
         # 4. Send via Graph
         try:
             graph_client.send_mail(token, data)
+        except graph_client.GraphAuthError:
+            return "Authentication failed. Token invalid or expired."
+        except graph_client.GraphThrottlingError:
+            return "Rate limit exceeded. Try again later."
+        except graph_client.GraphClientError as e:
+            return f"Invalid request: {str(e)}"
+        except graph_client.GraphServerError:
+            return "Microsoft Graph Server Error. Try again."
         except Exception as e:
             return f"Error sending email: {str(e)}"
 

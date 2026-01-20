@@ -77,8 +77,8 @@ def test_confirm_send_failure_keeps_draft(flow_tools):
             msg = confirm(did)
 
             # Should return error message
-            assert "Error sending email" in msg
-            assert "Internal Server Error" in msg
+            # Should return error message
+            assert "Microsoft Graph Server Error" in msg
 
     # 4. Verify Draft STILL EXISTS (for retry)
     assert drafts.store.get_draft(did) is not None
