@@ -2,12 +2,12 @@ import os
 from fastmcp import FastMCP
 from dotenv import load_dotenv
 
-from tools.mail_preview import register as register_mail_preview
-from tools.email_flow import register as register_email_flow
-from tools.auth_status import register as register_auth_status
-from tools.test_tools import register as register_test_tools
-
 load_dotenv()
+
+from tools.mail_preview import register as register_mail_preview  # noqa: E402
+from tools.email_flow import register as register_email_flow  # noqa: E402
+from tools.auth_status import register as register_auth_status  # noqa: E402
+from tools.test_tools import register as register_test_tools  # noqa: E402
 
 mcp = FastMCP("My MCP Server")
 

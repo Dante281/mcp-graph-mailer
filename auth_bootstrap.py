@@ -5,12 +5,13 @@ Run this locally once to populate token_cache.bin.
 
 import sys
 from dotenv import load_dotenv
-from tools import auth
+
+load_dotenv()
+
+from tools import auth  # noqa: E402
 
 
 def bootstrap():
-    load_dotenv()
-
     app = auth.get_msal_app()
     accounts = app.get_accounts()
 
