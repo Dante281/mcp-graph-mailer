@@ -22,4 +22,7 @@ All examples and workflows assume:
 - Run the HTTP client:
   `uv run python client.py`
 
+- Run tests:
+  `uv run pytest`
+
 This project does not support `pip`, `virtualenv`, or direct `python` execution.

@@ -1,4 +1,3 @@
-# uv run python server.py
 import os
 from fastmcp import FastMCP
 from dotenv import load_dotenv

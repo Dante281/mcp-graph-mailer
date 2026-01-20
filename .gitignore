@@ -21,6 +21,7 @@ token_cache.bin
 
 # MCP / logs
 *.log
+*.txt
 logs/
 
 # Testing
