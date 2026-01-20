@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from tools.mail_preview import register as register_mail_preview
 from tools.email_flow import register as register_email_flow
+from tools.auth_status import register as register_auth_status
 from tools.test_tools import register as register_test_tools
 
 load_dotenv()
@@ -16,6 +17,7 @@ if os.getenv("ENABLE_TEST_TOOLS") == "1":
 
 register_mail_preview(mcp)
 register_email_flow(mcp)
+register_auth_status(mcp)
 
 if __name__ == "__main__":
     mcp.run(transport="http", port=8000)
